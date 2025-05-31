@@ -40,3 +40,45 @@ public class ProductService {
 }
 
 
+package com.ashwaq.shoppingcart.entity;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "ashwaq_product")
+public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    private String description;
+    private double price;
+    private double tax;
+    private int stockQuantity;
+
+    public Product() {}
+
+    public Product(String name, String description, double price, double tax, int stockQuantity) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.tax = tax;
+        this.stockQuantity = stockQuantity;
+    }
+
+    // Getters and setters...
+}
+
+
+package com.ashwaq.shoppingcart.repository;
+
+import com.ashwaq.shoppingcart.entity.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface ProductRepository extends JpaRepository<Product, Long> {
+    List<Product> findByNameContainingIgnoreCase(String keyword);
+}
